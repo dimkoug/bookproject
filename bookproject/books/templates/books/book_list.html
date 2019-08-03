@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block page_title %}Book List{% endblock %}
+
+
+{% block content %}
+<div class="row">
+  <div class="col-12">
+    <a href="{% url 'books:book-create' %}" class="btn btn-primary float-right"> <i class="fas fa-plus"></i>Add book</a>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Book</th>
+          <th>Category</th>
+          <th>Authors</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for object in object_list %}
+        <tr>
+          <td><a href="{% url 'books:book-detail' object.pk %}">{{object.name}}</a></td>
+          <td><a href="{% url 'books:category-detail' object.category_id %}">{{object.category}}</a></td>
+          <td>
+            {% if object.bookauthors.all %}
+            <ul>
+              {% for author in object.bookauthors.all %}
+              <li>
+                <a href="{% url 'books:author-detail' author.pk %}">{{author}}</a>
+              </li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+          </td>
+          <td>
+            <a class="btn btn-warning" href="{% url 'books:book-update' object.pk %}"><i class="fas fa-edit"></i></a>
+            <a class="btn btn-danger" href="{% url 'books:book-delete' object.pk %}"><i class="fas fa-times"></i></a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      </table>
+    </div>
+  </div>
+
+
+{% endblock %}

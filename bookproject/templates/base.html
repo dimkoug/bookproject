@@ -1,0 +1,57 @@
+{% load static from staticfiles %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>{% block page_title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'bootstrap4/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap4/css/all.min.css' %}">
+        <link rel="stylesheet" href="{% static '/css/style.css' %}">
+    {% block head %}{% endblock %}
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="{% url 'books:book-list' %}">Book</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+      <ul class="navbar-nav mr-auto">
+        {% url 'books:book-list' as book_url %}
+        {% url 'books:author-list' as author_url %}
+        {% url 'books:category-list' as category_url %}
+        <li class="nav-item {% if request.path == book_url %}active {% endif %}">
+          <a class="nav-link" href="{{book_url}}">Books<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item {% if request.path == category_url %}active {% endif %}">
+          <a class="nav-link" href="{{category_url}}">Categories<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item {% if request.path == author_url %}active {% endif %}">
+          <a class="nav-link" href="{{author_url}}">Authors<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+          <div class="dropdown-menu" aria-labelledby="dropdown01">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">Something else here</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <main role="main" class="container">
+{% include 'messages.html' %}
+{% block content %}{% endblock %}
+
+  </main><!-- /.container -->
+
+
+<script src="{% static 'bootstrap4/js/jquery-3.4.1.min.js' %}"></script>
+<script src="{% static 'bootstrap4/js/popper.min.js' %}"></script>
+<script src="{% static 'bootstrap4/js/bootstrap.min.js' %}"></script>
+{% block scripts %}{% endblock %}
+  </body>
+</html>

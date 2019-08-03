@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block page_title %}Author List{% endblock %}
+
+
+{% block content %}
+<div class="row">
+  <div class="col-12">
+    <a href="{% url 'books:author-create' %}" class="btn btn-primary float-right"> <i class="fas fa-plus"></i>Add Author</a>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Author</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for object in object_list %}
+        <tr>
+          <td><a href="{% url 'books:author-detail' object.pk %}">{{object.name}}</a></td>
+          <td>
+            <a class="btn btn-warning" href="{% url 'books:author-update' object.pk %}"><i class="fas fa-edit"></i></a>
+            <a class="btn btn-danger" href="{% url 'books:author-delete' object.pk %}"><i class="fas fa-times"></i></a>
+            <a href="{% url 'books:book-create' %}?author={{object.pk}}" class="btn btn-primary"> <i class="fas fa-plus"></i>Add Book</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      </table>
+    </div>
+  </div>
+
+
+{% endblock %}
