@@ -3,7 +3,7 @@
 {% block content %}
 <div class="row">
   <div class="col-12">
-    <form method="post">{% csrf_token %}
+    <form method="post" enctype="multipart/form-data">{% csrf_token %}
         {{ form.as_p }}
         <div class="row">
           <div class="col-12">
@@ -17,6 +17,16 @@
     </form>
     </div>
   </div>
+  {% if form.instance.image %}
+<hr>
+  <div class="row">
+    <h3>Currently image thumbnail</h3>
+    <div class="col-12">
 
+      {{form.instance.get_thumb}}
+
+    </div>
+  </div>
+  {% endif %}
 
 {% endblock %}

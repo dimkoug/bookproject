@@ -15,6 +15,7 @@
       <thead>
         <tr>
           <th>Author</th>
+          <th>Image</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -22,6 +23,11 @@
         {% for object in object_list %}
         <tr>
           <td><a href="{% url 'books:author-detail' object.pk %}">{{object.name}}</a></td>
+          <td>
+            {% if object.image %}
+              {{object.get_thumb}}
+            {% endif %}
+            </td>
           <td>
             <a class="btn btn-warning" href="{% url 'books:author-update' object.pk %}"><i class="fas fa-edit"></i></a>
             <a class="btn btn-danger" href="{% url 'books:author-delete' object.pk %}"><i class="fas fa-times"></i></a>

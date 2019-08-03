@@ -22,10 +22,10 @@ class CategoryForm(BootstrapForm, forms.ModelForm):
 class AuthorForm(BootstrapForm, forms.ModelForm):
     class Meta:
         model = Author
-        fields = ('name',)
+        fields = ('name', 'image')
 
 
 class BookForm(BootstrapForm, forms.ModelForm):
     class Meta:
         model = Book
-        fields = ('category', 'authors', 'name',)
+        fields = ('category', 'authors', 'name', 'image')

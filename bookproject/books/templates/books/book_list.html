@@ -15,6 +15,7 @@
       <thead>
         <tr>
           <th>Book</th>
+          <th>Image</th>
           <th>Category</th>
           <th>Authors</th>
           <th>Actions</th>
@@ -24,6 +25,11 @@
         {% for object in object_list %}
         <tr>
           <td><a href="{% url 'books:book-detail' object.pk %}">{{object.name}}</a></td>
+          <td>
+            {% if object.image %}
+              {{object.get_thumb}}
+            {% endif %}
+            </td>
           <td><a href="{% url 'books:category-detail' object.category_id %}">{{object.category}}</a></td>
           <td>
             {% if object.bookauthors.all %}
