@@ -18,11 +18,15 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-from .views import HomeView
+
+from .views import IndexView
 
 urlpatterns = [
-    # path('', HomeView.as_view(), name='home'),
-    path('', include('books.urls')),
+    path('', IndexView.as_view(), name='index'),
+    path('books/', include('books.urls',namespace='books')),
+    path('users/', include('users.urls')),
+    path('users/api/', include('users.api.routers')),
+    path('profiles/', include('profiles.urls')),
     path('admin/', admin.site.urls),
 ]
 

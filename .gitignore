@@ -1,4 +1,6 @@
+.venv
 env
+migrations
 virtualenv
 settings_local.py
 

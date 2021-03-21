@@ -1,5 +1,21 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+
+
 
 {% block content %}
-  index
-{% endblock %}
+<div class="row mt-2">
+    <div class="card col-4 py-2 m-2">
+        <div class="card-header">
+            Books
+          </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"> <a href="{% url 'books:category-list' %}">Categories</a> </li>
+          <li class="list-group-item"> <a href="{% url 'books:author-list' %}">Authors</a> </li>
+          <li class="list-group-item"> <a href="{% url 'books:book-list' %}">Books</a> </li>
+        </ul>
+      </div>
+</div>
+
+
+
+{% endblock content %}

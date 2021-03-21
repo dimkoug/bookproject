@@ -1,40 +1,13 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+
 
 {% block content %}
-<div class="row">
-  <div class="col-12">
-    <h1>{{object}}</h1>
+
+<div class="row py-2">
+  <div class="col">
+  {{object}}  
   </div>
 </div>
-<div class="row">
-  <div class="col-12">
-    <a href="{% url 'books:book-create' %}?author={{object.pk}}" class="btn btn-primary float-right"> <i class="fas fa-plus"></i>Add Book</a>
-  </div>
-</div>
-{% if object.books.all %}
-<div class="row">
-  <div class="col-12">
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Book</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for book in object.books.all %}
-        <tr>
-          <td><a href="{% url 'books:book-detail' book.pk %}">{{book.name}}</a></td>
-          <td>
-            <a class="btn btn-warning" href="{% url 'books:book-update' book.pk %}"><i class="fas fa-edit"></i></a>
-            <a class="btn btn-danger" href="{% url 'books:book-delete' book.pk %}"><i class="fas fa-times"></i></a>
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-      </table>
-    </div>
-  </div>
-{% endif %}
+
 
 {% endblock %}
