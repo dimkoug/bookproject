@@ -1,37 +1,39 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
-{% block page_title %}Category List{% endblock %}
 
 {% block content %}
-<div class="row">
-  <div class="col-12">
-    <a href="{% url 'books:category-create' %}" class="btn btn-primary float-right"> <i class="fas fa-plus"></i>Add Category</a>
+<div class="row py-2">
+  <div class="col">
+    <h1>Categories</h1>
   </div>
 </div>
-<div class="row">
-  <div class="col-12">
-    <table class="table">
+<div class="row py-2">
+  <div class="col">
+  <a href="{% url 'books:category-add' %} " class="btn btn-primary float-right">Add</a>
+  </div>
+</div>
+<div class="row py-2">
+  <div class="col">
+    <table class="table table-bordered">
       <thead>
         <tr>
-          <th>Category</th>
+          <th>Name</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        {% for object in object_list %}
-        <tr>
-          <td><a href="{% url 'books:category-detail' object.pk %}">{{object.name}}</a></td>
-          <td>
-            <a class="btn btn-warning" href="{% url 'books:category-update' object.pk %}"><i class="fas fa-edit"></i></a>
-            <a class="btn btn-danger" href="{% url 'books:category-delete' object.pk %}"><i class="fas fa-times"></i></a>
-            <a href="{% url 'books:book-create' %}?category={{object.pk}}" class="btn btn-primary"> <i class="fas fa-plus"></i>Add Book</a>
-          </td>
-        </tr>
+        {% for obj in object_list %}
+          <tr>
+            <td>{{ obj.name }}</td>
+            <td><a href="{% url 'books:category-update' obj.pk  %}" class="btn btn-warning">Update</a> <a href="{% url 'books:category-delete' obj.pk  %}" class="btn btn-danger">delete</a></td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="2" style="text-align:center;">No categories yet.</td>
+          </tr>
         {% endfor %}
       </tbody>
-      </table>
-    </div>
+    </table>
   </div>
-
-
+</div>
 {% endblock %}

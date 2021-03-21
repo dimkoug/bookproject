@@ -1,57 +1,45 @@
-{% extends "base.html" %}
-
-{% block page_title %}Book List{% endblock %}
+{% extends 'base.html' %}
 
 
 {% block content %}
-<div class="row">
-  <div class="col-12">
-    <a href="{% url 'books:book-create' %}" class="btn btn-primary float-right"> <i class="fas fa-plus"></i>Add book</a>
+<div class="row py-2">
+  <div class="col">
+    <h1>Books</h1>
   </div>
 </div>
-<div class="row">
-  <div class="col-12">
-    <table class="table">
+<div class="row py-2">
+  <div class="col">
+  <a href="{% url 'books:book-add' %} " class="btn btn-primary float-right">Add</a>
+  </div>
+</div>
+<div class="row py-2">
+  <div class="col">
+    <table class="table table-bordered">
       <thead>
         <tr>
-          <th>Book</th>
+          <th>Name</th>
           <th>Image</th>
-          <th>Category</th>
-          <th>Authors</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        {% for object in object_list %}
-        <tr>
-          <td><a href="{% url 'books:book-detail' object.pk %}">{{object.name}}</a></td>
-          <td>
-            {% if object.image %}
-              {{object.get_thumb}}
-            {% endif %}
+        {% for obj in object_list %}
+          <tr>
+            <td>{{ obj.name }}</td>
+            <td>
+              {% if object.image %}
+                {{object.get_thumb}}
+              {% endif %}
             </td>
-          <td><a href="{% url 'books:category-detail' object.category_id %}">{{object.category}}</a></td>
-          <td>
-            {% if object.bookauthors.all %}
-            <ul>
-              {% for author in object.bookauthors.all %}
-              <li>
-                <a href="{% url 'books:author-detail' author.pk %}">{{author}}</a>
-              </li>
-              {% endfor %}
-            </ul>
-            {% endif %}
-          </td>
-          <td>
-            <a class="btn btn-warning" href="{% url 'books:book-update' object.pk %}"><i class="fas fa-edit"></i></a>
-            <a class="btn btn-danger" href="{% url 'books:book-delete' object.pk %}"><i class="fas fa-times"></i></a>
-          </td>
-        </tr>
+            <td><a href="{% url 'books:book-update' obj.pk  %}" class="btn btn-warning">Update</a> <a href="{% url 'books:book-delete' obj.pk  %}" class="btn btn-danger">delete</a></td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="3" style="text-align:center;">No books yet.</td>
+          </tr>
         {% endfor %}
       </tbody>
-      </table>
-    </div>
+    </table>
   </div>
-
-
+</div>
 {% endblock %}

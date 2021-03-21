@@ -1,44 +1,48 @@
-{% extends "base.html" %}
-
-{% block page_title %}Author List{% endblock %}
+{% extends 'base.html' %}
 
 
 {% block content %}
-<div class="row">
-  <div class="col-12">
-    <a href="{% url 'books:author-create' %}" class="btn btn-primary float-right"> <i class="fas fa-plus"></i>Add Author</a>
+<div class="row py-2">
+  <div class="col">
+    <h1>Authors</h1>
   </div>
 </div>
-<div class="row">
-  <div class="col-12">
-    <table class="table">
+<div class="row py-2">
+  <div class="col">
+  <a href="{% url 'books:author-add' %} " class="btn btn-primary float-right">Add</a>
+  </div>
+</div>
+<div class="row py-2">
+  <div class="col">
+    <table class="table table-bordered">
       <thead>
         <tr>
-          <th>Author</th>
+          <th>Name</th>
           <th>Image</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        {% for object in object_list %}
-        <tr>
-          <td><a href="{% url 'books:author-detail' object.pk %}">{{object.name}}</a></td>
-          <td>
-            {% if object.image %}
-              {{object.get_thumb}}
-            {% endif %}
+        {% for obj in object_list %}
+          <tr>
+            <td>{{ obj.name }}</td>
+            <td>
+              {% if object.image %}
+                {{object.get_thumb}}
+              {% endif %}
             </td>
-          <td>
-            <a class="btn btn-warning" href="{% url 'books:author-update' object.pk %}"><i class="fas fa-edit"></i></a>
-            <a class="btn btn-danger" href="{% url 'books:author-delete' object.pk %}"><i class="fas fa-times"></i></a>
-            <a href="{% url 'books:book-create' %}?author={{object.pk}}" class="btn btn-primary"> <i class="fas fa-plus"></i>Add Book</a>
-          </td>
-        </tr>
+            <td><a href="{% url 'books:author-update' obj.pk  %}" class="btn btn-warning">Update</a> <a href="{% url 'books:author-delete' obj.pk  %}" class="btn btn-danger">delete</a></td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="3" style="text-align:center;">No authors yet.</td>
+          </tr>
         {% endfor %}
       </tbody>
-      </table>
-    </div>
+    </table>
   </div>
+</div>
+
 
 
 {% endblock %}

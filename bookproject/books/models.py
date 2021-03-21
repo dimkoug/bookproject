@@ -7,10 +7,10 @@ class Timestamped(models.Model):
 
     class Meta:
         abstract = True
-
+# Create your models here.
 
 class Category(Timestamped):
-    name = models.CharField(max_length=100)
+    name = models.CharField(blank=True, max_length=100)
 
     class Meta:
         default_related_name = 'categories'
@@ -22,7 +22,7 @@ class Category(Timestamped):
 
 
 class Author(Timestamped):
-    name = models.CharField(max_length=100)
+    name = models.CharField(blank=True, max_length=100)
     image = models.ImageField(upload_to='authors/', null=True, blank=True)
 
     class Meta:
@@ -40,12 +40,10 @@ class Author(Timestamped):
         return ''
 
 
-
-
 class Book(Timestamped):
-    name = models.CharField(max_length=100)
+    name = models.CharField(blank=True, max_length=100)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    authors = models.ManyToManyField(Author, through='BookAuthor')
+    authors = models.ManyToManyField(Author, through='BookAuthor', symmetrical=False, blank=True)
     image = models.ImageField(upload_to='covers/', null=True, blank=True)
 
     class Meta:
@@ -71,6 +69,3 @@ class BookAuthor(Timestamped):
         default_related_name = 'bookauthors'
         verbose_name = 'book author'
         verbose_name_plural = 'book authors'
-
-    def __str__(self):
-        return self.author.name
