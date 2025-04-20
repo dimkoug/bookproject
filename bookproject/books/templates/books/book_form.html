@@ -30,7 +30,7 @@
                                   <small class="form-text text-muted">{{ form.title.help_text }}</small>
                                 {% endif %}
                               </div>
-                            </div>
+                            </div> <!--title-->
                             <div class="col-4">
                               <div class="form-group">
                                 {{ form.category.label_tag }}
@@ -44,18 +44,265 @@
                                   <small class="form-text text-muted">{{ form.category.help_text }}</small>
                                 {% endif %}
                               </div>
-                            </div>
+                            </div><!--category-->
                             <div class="col-4">
                               <div class="form-group">
-                                {{ form.image.errors }}
+                                {{ form.publisher.label_tag }}
+                                {{form.publisher}}
+                                {% if form.publisher.errors %}
+                                <div class="invalid-feedback">
+                                  {{form.publisher.errors}}
+                                </div>
+                                {%endif%}
+                                
+                                
+                                {% if form.publisher.help_text %}
+                                  <small class="form-text text-muted">{{ form.publisher.help_text }}</small>
+                                {% endif %}
+                              </div>
+                            </div><!--publisher-->
+                          </div><!--row-->
+                          <div class="row">
+                            <div class="col-4">
+                              <div class="form-group">
+                                {{ form.isbn.label_tag }}
+                                {{form.isbn}}
+                                {% if form.isbn.errors %}
+                                <div class="invalid-feedback">
+                                  {{form.isbn.errors}}
+                                </div>
+                                {%endif%}
+                                {% if form.isbn.help_text %}
+                                  <small class="form-text text-muted">{{ form.isbn.help_text }}</small>
+                                {% endif %}
+                              </div>
+                            </div> <!--isbn-->
+                            <div class="col-4">
+                              <div class="form-group">
+                                {{ form.publication_date.label_tag }}
+                                {{form.publication_date}}
+                                {% if form.publication_date.errors %}
+                                <div class="invalid-feedback">
+                                  {{form.publication_date.errors}}
+                                </div>
+                                {%endif%}
+                                {% if form.publication_date.help_text %}
+                                  <small class="form-text text-muted">{{ form.publication_date.help_text }}</small>
+                                {% endif %}
+                              </div>
+                            </div><!--publication date-->
+                            <div class="col-4">
+                              <div class="form-group">
+                                {{ form.language.label_tag }}
+                                {{form.language}}
+                                {% if form.language.errors %}
+                                <div class="invalid-feedback">
+                                  {{form.language.errors}}
+                                </div>
+                                {%endif%}
+
+                                {% if form.language.help_text %}
+                                  <small class="form-text text-muted">{{ form.language.help_text }}</small>
+                                {% endif %}
+                              </div>
+                            </div><!--language-->
+                          </div><!--row-->
+                          <div class="row">
+                            <div class="col-4">
+                              <div class="form-group">
+                                {{ form.pages.label_tag }}
+                                {{form.pages}}
+                                {% if form.pages.errors %}
+                                <div class="invalid-feedback">
+                                  {{form.pages.errors}}
+                                </div>
+                                {%endif%}
+                                {% if form.pages.help_text %}
+                                  <small class="form-text text-muted">{{ form.pages.help_text }}</small>
+                                {% endif %}
+                              </div>
+                            </div> <!--pages-->
+                            <div class="col-4">
+                              <div class="form-group">
+                                {{ form.genre.label_tag }}
+                                {{form.genre}}
+                                {% if form.genre.errors %}
+                                <div class="invalid-feedback">
+                                  {{form.genre.errors}}
+                                </div>
+                                {%endif%}
+                                {% if form.genre.help_text %}
+                                  <small class="form-text text-muted">{{ form.genre.help_text }}</small>
+                                {% endif %}
+                              </div>
+                            </div><!--genre-->
+                            <div class="col-4">
+                              <div class="form-group">
+                                {{ form.format.label_tag }}
+                                {{form.format}}
+                                {% if form.format.errors %}
+                                <div class="invalid-feedback">
+                                  {{form.format.errors}}
+                                </div>
+                                {%endif%}
+
+                                {% if form.format.help_text %}
+                                  <small class="form-text text-muted">{{ form.format.help_text }}</small>
+                                {% endif %}
+                              </div>
+                            </div><!--format-->
+                          </div><!--row-->
+                          <div class="row">
+                            <div class="col-4">
+                              <div class="form-group">
+                                {{ form.edition.label_tag }}
+                                {{form.edition}}
+                                {% if form.edition.errors %}
+                                <div class="invalid-feedback">
+                                  {{form.edition.errors}}
+                                </div>
+                                {%endif%}
+                                {% if form.edition.help_text %}
+                                  <small class="form-text text-muted">{{ form.edition.help_text }}</small>
+                                {% endif %}
+                              </div>
+                            </div> <!--edition-->
+                            <div class="col-4">
+                              <div class="form-group">
+                                {{ form.summary.label_tag }}
+                                {{form.summary}}
+                                {% if form.summary.errors %}
+                                <div class="invalid-feedback">
+                                  {{form.summary.errors}}
+                                </div>
+                                {%endif%}
+                                {% if form.summary.help_text %}
+                                  <small class="form-text text-muted">{{ form.summary.help_text }}</small>
+                                {% endif %}
+                              </div>
+                            </div><!--summary-->
+                            <div class="col-4">
+                              <div class="form-group">
+                                {{ form.copies_available.label_tag }}
+                                {{form.copies_available}}
+                                {% if form.copies_available.errors %}
+                                <div class="invalid-feedback">
+                                  {{form.copies_available.errors}}
+                                </div>
+                                {%endif%}
+
+                                {% if form.copies_available.help_text %}
+                                  <small class="form-text text-muted">{{ form.copies_available.help_text }}</small>
+                                {% endif %}
+                              </div>
+                            </div><!--copies_available-->
+                          </div><!--row-->
+                          <div class="row">
+                            <div class="col-4">
+                              <div class="form-group">
+                                {{ form.location.label_tag }}
+                                {{form.location}}
+                                {% if form.location.errors %}
+                                <div class="invalid-feedback">
+                                  {{form.location.errors}}
+                                </div>
+                                {%endif%}
+                                {% if form.location.help_text %}
+                                  <small class="form-text text-muted">{{ form.location.help_text }}</small>
+                                {% endif %}
+                              </div>
+                            </div> <!--location-->
+                            <div class="col-4">
+                              <div class="form-group">
+                                {{ form.is_available.label_tag }}
+                                {{form.is_available}}
+                                {% if form.is_available.errors %}
+                                <div class="invalid-feedback">
+                                  {{form.is_available.errors}}
+                                </div>
+                                {%endif%}
+                                {% if form.is_available.help_text %}
+                                  <small class="form-text text-muted">{{ form.is_available.help_text }}</small>
+                                {% endif %}
+                              </div>
+                            </div><!--is_available-->
+                            <div class="col-4">
+                              <div class="form-group">
+                                {{ form.dewey_decimal.label_tag }}
+                                {{form.dewey_decimal}}
+                                {% if form.dewey_decimal.errors %}
+                                <div class="invalid-feedback">
+                                  {{form.dewey_decimal.errors}}
+                                </div>
+                                {%endif%}
+
+                                {% if form.dewey_decimal.help_text %}
+                                  <small class="form-text text-muted">{{ form.dewey_decimal.help_text }}</small>
+                                {% endif %}
+                              </div>
+                            </div><!--dewey_decimal-->
+                          </div><!--row-->
+                          <div class="row">
+                            <div class="col-4">
+                              <div class="form-group">
+                                {{ form.library_of_congress.label_tag }}
+                                {{form.library_of_congress}}
+                                {% if form.library_of_congress.errors %}
+                                <div class="invalid-feedback">
+                                  {{form.library_of_congress.errors}}
+                                </div>
+                                {%endif%}
+                                {% if form.library_of_congress.help_text %}
+                                  <small class="form-text text-muted">{{ form.library_of_congress.help_text }}</small>
+                                {% endif %}
+                              </div>
+                            </div> <!--library_of_congress-->
+                            <div class="col-4">
+                              <div class="form-group">
+                                {{ form.file_url.label_tag }}
+                                {{form.file_url}}
+                                {% if form.file_url.errors %}
+                                <div class="invalid-feedback">
+                                  {{form.file_url.errors}}
+                                </div>
+                                {%endif%}
+                                {% if form.file_url.help_text %}
+                                  <small class="form-text text-muted">{{ form.file_url.help_text }}</small>
+                                {% endif %}
+                              </div>
+                            </div><!--file_url-->
+                            <div class="col-4">
+                              <div class="form-group">
+                                {{ form.file_format.label_tag }}
+                                {{form.file_format}}
+                                {% if form.file_format.errors %}
+                                <div class="invalid-feedback">
+                                  {{form.file_format.errors}}
+                                </div>
+                                {%endif%}
+
+                                {% if form.file_format.help_text %}
+                                  <small class="form-text text-muted">{{ form.file_format.help_text }}</small>
+                                {% endif %}
+                              </div>
+                            </div><!--file_format-->
+                          </div><!--row-->
+                          <div class="row">
+                            <div class="col-4">
+                              <div class="form-group">
                                 {{ form.image.label_tag }}
                                 {{form.image}}
+                                {% if form.image.errors %}
+                                <div class="invalid-feedback">
+                                  {{form.image.errors}}
+                                </div>
+                                {%endif%}
                                 {% if form.image.help_text %}
                                   <small class="form-text text-muted">{{ form.image.help_text }}</small>
                                 {% endif %}
                               </div>
-                            </div>
-                          </div>
+                            </div> <!--image-->
+                            </div><!--row-->
                           {% include 'partials/formset.html' with formset=formsets.0 %}
                     </div> <!-- info -->
                   </div>
