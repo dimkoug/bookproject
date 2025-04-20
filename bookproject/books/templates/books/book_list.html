@@ -69,7 +69,7 @@
 
       $("#id_category").select2({
         ajax: {
-          url: '/books/get_sb_categories_data/',
+          url: '/books/categories/sb/',
           data: function (params) {
             var query = {
               search: params.term,
@@ -83,7 +83,7 @@
   
       $("#id_author").select2({
         ajax: {
-          url: '/books/get_sb_authors_data/',
+          url: '/authors/sb/',
           data: function (params) {
             var query = {
               search: params.term,
