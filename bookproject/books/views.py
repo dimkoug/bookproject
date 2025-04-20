@@ -123,7 +123,7 @@ class BookCreateView(BaseCreateView):
                 'title': 'Authors',
                 'formset': BookAuthorFormSet(self.request.POST or None,
                                              queryset=Author.objects.select_related('profile').filter(profile_id=self.request.user.profile)),
-                "sb_url": reverse("books:sb-authors")
+                "sb_url": reverse("authors:sb-authors")
             },
         ]
         return context

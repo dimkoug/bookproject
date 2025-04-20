@@ -19,23 +19,27 @@
                         <div class="row">
                             <div class="col-4">
                               <div class="form-group">
-                                {{ form.name.label_tag }}
-                                {{form.name}}
-                                {% if form.name.errors %}
+                                {{ form.title.label_tag }}
+                                {{form.title}}
+                                {% if form.title.errors %}
                                 <div class="invalid-feedback">
-                                  {{form.name.errors}}
+                                  {{form.title.errors}}
                                 </div>
                                 {%endif%}
-                                {% if form.name.help_text %}
-                                  <small class="form-text text-muted">{{ form.name.help_text }}</small>
+                                {% if form.title.help_text %}
+                                  <small class="form-text text-muted">{{ form.title.help_text }}</small>
                                 {% endif %}
                               </div>
                             </div>
                             <div class="col-4">
                               <div class="form-group">
-                                {{ form.category.errors }}
                                 {{ form.category.label_tag }}
                                 {{form.category}}
+                                {% if form.category.errors %}
+                                <div class="invalid-feedback">
+                                  {{form.category.errors}}
+                                </div>
+                                {%endif%}
                                 {% if form.category.help_text %}
                                   <small class="form-text text-muted">{{ form.category.help_text }}</small>
                                 {% endif %}
@@ -76,7 +80,7 @@
 
       $("#id_category").select2({
         ajax: {
-          url: '/books/get_sb_categories_data/',
+          url: '/books/categories/sb/',
           data: function (params) {
             var query = {
               search: params.term,
