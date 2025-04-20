@@ -8,7 +8,7 @@ def get_sb_categories_data(request):
     results = []
     if not request.user.is_authenticated:
         return JsonResponse(results, safe=False)
-    model = Category
+    model = Publisher
     q_objects = Q()
     d_objects = []
     search = request.GET.get('search')

@@ -23,7 +23,9 @@ from .views import IndexView
 
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),
+    path('authors/', include('authors.urls',namespace='authors')),
     path('books/', include('books.urls',namespace='books')),
+    path('publishers/', include('publishers.urls',namespace='publishers')),
     path('users/', include('users.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('users/api/', include('users.api.routers')),

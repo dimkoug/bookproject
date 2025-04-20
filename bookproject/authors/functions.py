@@ -4,11 +4,11 @@ from core.functions import get_sb_data
 from .models import *
 
 
-def get_sb_categories_data(request):
+def get_sb_data(request):
     results = []
     if not request.user.is_authenticated:
         return JsonResponse(results, safe=False)
-    model = Category
+    model = Author
     q_objects = Q()
     d_objects = []
     search = request.GET.get('search')
@@ -35,5 +35,3 @@ def get_sb_categories_data(request):
             "text": d.__str__()
         })
     return JsonResponse({"results": d_objects}, safe=False)
-
-

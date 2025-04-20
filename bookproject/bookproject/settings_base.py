@@ -56,6 +56,9 @@ INSTALLED_APPS = [
     'users',
     'users.api',
     'profiles',
+    'authors',
+    'publishers',
+    
     'books',
 ]
 
