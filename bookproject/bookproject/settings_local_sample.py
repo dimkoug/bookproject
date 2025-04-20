@@ -5,7 +5,9 @@ from .settings_base import *
 This file is used to create a local settings_local.py file for development
 '''
 
+PAGINATED_BY = 10
 
+ALLOWED_ORIGINS = ['127.0.0.1']
 
 DEBUG = True
 

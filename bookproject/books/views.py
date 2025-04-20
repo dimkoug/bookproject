@@ -7,34 +7,16 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-
+from django.conf import settings
 
 from core.functions import is_ajax
-from core.mixins import PaginationMixin, ModelMixin, SuccessUrlMixin,FormMixin,QueryListMixin, AjaxDeleteMixin
+from core.mixins import *
+from core.views import *
+from .forms import *
 
 
 
-
-from .models import Category, Author,Book, BookAuthor
-from .forms import (CategoryForm, AuthorForm,BookForm,
-                    BookFormSet, BookAuthorFormSet)
-
-
-
-class BaseListView(PaginationMixin,QueryListMixin,ModelMixin, LoginRequiredMixin, ListView):
-    def dispatch(self, *args, **kwargs):
-        self.ajax_list_partial = '{}/partials/{}_list_partial.html'.format(self.model._meta.app_label,self.model.__name__.lower())
-        return super().dispatch(*args, **kwargs)
-    
-    def get(self, request, *args, **kwargs):
-        self.object_list = self.get_queryset()
-        context = self.get_context_data()
-        if is_ajax(request):
-            html_form = render_to_string(
-                self.ajax_list_partial, context, request)
-            return JsonResponse(html_form, safe=False)
-        return super().get(request, *args, **kwargs)
-
+class BaseListView(BaseListView):
     def get_queryset(self):
         queryset = super().get_queryset()
         queryset = queryset.filter(profile_id=self.request.user.profile.id)
@@ -42,7 +24,7 @@ class BaseListView(PaginationMixin,QueryListMixin,ModelMixin, LoginRequiredMixin
 
 
 
-class AuthorDetailView(DetailView):
+class AuthorDetailView(BaseDetailView):
     model = Author
 
     def get_queryset(self):
@@ -50,28 +32,21 @@ class AuthorDetailView(DetailView):
         queryset = queryset.filter(profile_id=self.request.user.profile.id)
         return queryset
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
 
 
 class AuthorListView(BaseListView):
 
     model = Author
     queryset = Author.objects.select_related('profile').prefetch_related(Prefetch('bookauthors',queryset=BookAuthor.objects.select_related('book'),to_attr='books'))
-    paginate_by = 10
+    paginate_by = settings.PAGINATED_BY
 
     def get_queryset(self):
         queryset = super().get_queryset()
         queryset = queryset.filter(profile_id=self.request.user.profile.id)
         return queryset
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
 
-
-class AuthorCreateView(ModelMixin, LoginRequiredMixin,SuccessUrlMixin,FormMixin, CreateView):
+class AuthorCreateView(BaseCreateView):
     model = Author
     form_class = AuthorForm
 
@@ -83,15 +58,14 @@ class AuthorCreateView(ModelMixin, LoginRequiredMixin,SuccessUrlMixin,FormMixin,
 
 
 
-class AuthorUpdateView(ModelMixin, LoginRequiredMixin,SuccessUrlMixin,FormMixin, UpdateView):
+class AuthorUpdateView(BaseUpdateView):
     model = Author
     form_class = AuthorForm
-    success_url = reverse_lazy('books:author-list')
 
 
 
 
-class AuthorDeleteView(ModelMixin, LoginRequiredMixin,SuccessUrlMixin,AjaxDeleteMixin,DeleteView):
+class AuthorDeleteView(BaseDeleteView):
     model = Author
     ajax_partial = 'partials/ajax_delete_modal.html'
 
@@ -101,7 +75,7 @@ class AuthorDeleteView(ModelMixin, LoginRequiredMixin,SuccessUrlMixin,AjaxDelete
         return queryset
 
 
-class CategoryDetailView(DetailView):
+class CategoryDetailView(BaseDetailView):
     model = Category
 
     def get_queryset(self):
@@ -109,15 +83,11 @@ class CategoryDetailView(DetailView):
         queryset = queryset.filter(profile_id=self.request.user.profile.id)
         return queryset
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
-
 
 class CategoryListView(BaseListView):
 
     model = Category
-    paginate_by = 100  # if pagination is desired
+    paginate_by = settings.PAGINATED_BY
     queryset = Category.objects.prefetch_related('books')
 
     def get_queryset(self):
@@ -130,7 +100,7 @@ class CategoryListView(BaseListView):
         return context
 
 
-class CategoryCreateView(ModelMixin, LoginRequiredMixin,SuccessUrlMixin,FormMixin, CreateView):
+class CategoryCreateView(BaseCreateView):
     model = Category
     form_class = CategoryForm
 
@@ -142,13 +112,13 @@ class CategoryCreateView(ModelMixin, LoginRequiredMixin,SuccessUrlMixin,FormMixi
 
 
 
-class CategoryUpdateView(ModelMixin, LoginRequiredMixin,SuccessUrlMixin,FormMixin, UpdateView):
+class CategoryUpdateView(BaseUpdateView):
     model = Category
     form_class = CategoryForm
 
 
 
-class CategoryDeleteView(ModelMixin, LoginRequiredMixin,SuccessUrlMixin,AjaxDeleteMixin,DeleteView):
+class CategoryDeleteView(BaseDeleteView):
     model = Category
     ajax_partial = 'partials/ajax_delete_modal.html'
 
@@ -158,7 +128,7 @@ class CategoryDeleteView(ModelMixin, LoginRequiredMixin,SuccessUrlMixin,AjaxDele
         return queryset
 
 
-class BookDetailView(DetailView):
+class BookDetailView(BaseDetailView):
     model = Book
 
     def get_queryset(self):
@@ -174,7 +144,7 @@ class BookDetailView(DetailView):
 class BookListView(BaseListView):
 
     model = Book
-    paginate_by = 100  # if pagination is desired
+    paginate_by = settings.PAGINATED_BY
     query = Book.objects.select_related('category', 'profile').prefetch_related('authors')
 
     def get_queryset(self):
@@ -188,15 +158,13 @@ class BookListView(BaseListView):
             queryset = queryset.filter(authors__in=authors)
         return queryset
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
 
 
-class BookCreateView(ModelMixin, LoginRequiredMixin,SuccessUrlMixin,FormMixin, CreateView):
+
+class BookCreateView(BaseCreateView):
     model = Book
     form_class = BookForm
-    success_url = reverse_lazy('books:book-list')
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -229,7 +197,7 @@ class BookCreateView(ModelMixin, LoginRequiredMixin,SuccessUrlMixin,FormMixin, C
         return super().form_valid(form)
 
 
-class BookUpdateView(ModelMixin, LoginRequiredMixin,SuccessUrlMixin,FormMixin, UpdateView):
+class BookUpdateView(BaseUpdateView):
     model = Book
     form_class = BookForm
     success_url = reverse_lazy('books:book-list')
@@ -268,7 +236,7 @@ class BookUpdateView(ModelMixin, LoginRequiredMixin,SuccessUrlMixin,FormMixin, U
         return super().form_valid(form)
 
 
-class BookDeleteView(ModelMixin, LoginRequiredMixin,SuccessUrlMixin,AjaxDeleteMixin,DeleteView):
+class BookDeleteView(BaseDeleteView):
     model = Book
     ajax_partial = 'partials/ajax_delete_modal.html'
 

@@ -4,13 +4,36 @@ import hashlib
 import datetime
 from uuslug import uuslug
 from urllib.parse import unquote
-from sorl.thumbnail import get_thumbnail
+from django.urls import reverse_lazy
 from django.db import models
 from django.utils.html import format_html, mark_safe
 from django.core.files.storage import FileSystemStorage
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
+
+
+class Url(models.Model):
+    class Meta:
+        abstract = True
+
+
+    @property
+    def get_view_url(self):
+        return reverse_lazy(f"{self._meta.app_label}:{self.__class__.__name__.lower()}_view",kwargs={"pk":self.id})
+
+
+    @property
+    def get_change_url(self):
+        return reverse_lazy(f"{self._meta.app_label}:{self.__class__.__name__.lower()}_change",kwargs={"pk":self.id})
+
+
+    @property
+    def get_delete_url(self):
+        return reverse_lazy(f"{self._meta.app_label}:{self.__class__.__name__.lower()}_delete",kwargs={"pk":self.id})
+
+
+
 
 class UserData(models.Model):
     created_by = models.ForeignKey(
@@ -40,7 +63,7 @@ class Ordered(models.Model):
 
 class Timestamped(models.Model):
     created = models.DateTimeField(auto_now_add=True)
-    modified = models.DateTimeField(auto_now=True)
+    updated = models.DateTimeField(auto_now=True)
 
     class Meta:
         abstract = True
@@ -129,9 +152,7 @@ class Media(models.Model):
     def filename(self):
         return os.path.basename(self.image.name)
 
-    def get_thumbnails(self):
-        im = get_thumbnail(self.image, 'x500', quality=99)
-        return im.url
+
 
     def get_thumb(self):
         if self.image:

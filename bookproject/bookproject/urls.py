@@ -25,6 +25,7 @@ urlpatterns = [
     path('', IndexView.as_view(), name='index'),
     path('books/', include('books.urls',namespace='books')),
     path('users/', include('users.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
     path('users/api/', include('users.api.routers')),
     path('profiles/', include('profiles.urls')),
     path('admin/', admin.site.urls),

@@ -63,15 +63,27 @@ class CategoryForm(BootstrapForm, forms.ModelForm):
         model = Category
         fields = ('name',)
 
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop("request")
+        super().__init__(*args, **kwargs)
+
 class AuthorForm(BootstrapForm, forms.ModelForm):
     class Meta:
         model = Author
         fields = ('name', 'image')
 
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop("request")
+        super().__init__(*args, **kwargs)
+
 class BookForm(BootstrapForm, forms.ModelForm):
     class Meta:
         model = Book
         fields = ('name', 'category', 'image')
+
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop("request")
+        super().__init__(*args, **kwargs)
 
 BookFormSet = inlineformset_factory(Category, Book, BookForm, formset=unique_bootstrap_field_formset('name'), can_delete=True)
 BookAuthorFormSet = inlineformset_factory(Book, BookAuthor, fields=('author',),formset=unique_bootstrap_field_formset('author'), can_delete=True)
