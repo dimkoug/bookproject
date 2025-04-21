@@ -51,7 +51,7 @@ class Book(Timestamped):
         verbose_name_plural = 'books'
 
     def __str__(self):
-        return self.name
+        return self.title
 
     def get_thumb(self):
         if self.image:
