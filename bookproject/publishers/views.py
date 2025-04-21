@@ -70,7 +70,7 @@ class PublisherDeleteView(BaseDeleteView):
 class PublishingContractListView(BaseListView):
 
     model = PublishingContract
-    queryset = PublishingContract.objects.select_related('author__profile')
+    queryset = PublishingContract.objects.select_related('author','author__profile', 'publisher')
     paginate_by = settings.PAGINATED_BY
 
     def get_queryset(self):

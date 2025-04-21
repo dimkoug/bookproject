@@ -6,28 +6,20 @@
           <table class="table table-stripped">
             <thead>
               <tr>
-                <th>Name</th>
-                <th>Image</th>
-                <th>Books</th>
+                <th>Publisher</th>
+                <th>Author</th>
+                <th>Contract Date</th>
+                <th>Expiry Date</th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
               {% for obj in object_list %}
               <tr>
-                <td>{{obj}}</td>
-                <td>
-                    {% if obj.image %}
-                        <img src="{{obj.image.url}}" alt="">
-                    {% endif %}
-                </td>
-                <td>
-                  <ul>
-                    {% for book in obj.books.all %}
-                      <li>{{book}}</li>
-                    {% endfor %}
-                  </ul>
-                </td>
+                <td>{{obj.publisher}}</td>
+                <td>{{obj.author}}</td>
+                <td>{{obj.contract_date|date:"Y/m/d"}}</td>
+                <td>{{obj.expiry_date|date:"Y/m/d"}}</td>
                 <td>
                   {% include 'partials/action_buttons.html' with obj=obj %}
                 </td>
