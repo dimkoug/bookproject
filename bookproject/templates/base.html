@@ -28,9 +28,30 @@
 </head>
 <body>
   {% include 'navbar.html' %}
-    <div class="container mt-4 content rounded shadow">
-        {% block content %}{% endblock content %}
-    </div>
+    
+  
+  
+  
+  <div class="container mt-4 content rounded shadow">
+      <div class="row">
+          <div class="col-2">
+            <div> <a href="{% url 'books:category_list' %}">Categories</a> </div>
+            <div> <a href="{% url 'authors:author_list' %}">Authors</a> </div>
+            <div> <a href="{% url 'books:book_list' %}">Books</a> </div>
+
+          </div> <!--sidebar-->
+          <div class="col-8">
+            {% block content %}{% endblock content %}
+
+
+          </div> <!--content-->
+
+      </div>    
+    
+    
+    
+
+  </div>
 
 
     <div class="modal" tabindex="-1" id="modal">
