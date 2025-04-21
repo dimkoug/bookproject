@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% load core %}
+
+
+{% block content %}
+<div class="row py-2">
+    <div class="col-12">
+        <form method="post" enctype='multipart/form-data' novalidate>{% csrf_token %}
+            <div class="card m-2 py-2">
+              <div class="card-body">
+                {{form.errors}}
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="info-tab" data-bs-toggle="tab" data-bs-target="#info" type="button" role="tab" aria-controls="info" aria-selected="true">Info</button>
+                  </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="info" role="tabpanel" aria-labelledby="info-tab" tabindex="0">
+                        <div class="row">
+                            <div class="col-6">
+                              <div class="form-group">
+                                {{ form.publisher.label_tag }}
+                                {{form.publisher}}
+                                {% if form.publisher.errors %}
+                                <div class="invalid-feedback">
+                                  {{form.publisher.errors}}
+                                </div>
+                                {%endif%}
+                                {% if form.publisher.help_text %}
+                                  <small class="form-text text-muted">{{ form.publisher.help_text }}</small>
+                                {% endif %}
+                              </div>
+                            </div>
+                            <div class="col-6">
+                              <div class="form-group">
+                                {{ form.author.errors }}
+                                {{ form.author.label_tag }}
+                                {{form.author}}
+                                {% if form.author.help_text %}
+                                  <small class="form-text text-muted">{{ form.author.help_text }}</small>
+                                {% endif %}
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-6">
+                              <div class="form-group">
+                                {{ form.contract_date.label_tag }}
+                                {{form.contract_date}}
+                                {% if form.contract_date.errors %}
+                                <div class="invalid-feedback">
+                                  {{form.contract_date.errors}}
+                                </div>
+                                {%endif%}
+                                {% if form.contract_date.help_text %}
+                                  <small class="form-text text-muted">{{ form.contract_date.help_text }}</small>
+                                {% endif %}
+                              </div>
+                            </div>
+                            <div class="col-6">
+                              <div class="form-group">
+                                {{ form.expiry_date.label_tag }}
+                                {{form.expiry_date}}
+                                {% if form.expiry_date.errors %}
+                                <div class="invalid-feedback">
+                                  {{form.expiry_date.errors}}
+                                </div>
+                                {%endif%}
+                                {% if form.expiry_date.help_text %}
+                                  <small class="form-text text-muted">{{ form.expiry_date.help_text }}</small>
+                                {% endif %}
+                              </div>
+                            </div>
+                          </div>
+                    </div> <!-- info -->
+                  </div>
+
+                {% include 'partials/form_buttons.html' with form=form %}
+              </div>
+            </div>
+            
+          </form>
+
+    </div>
+
+
+</div>
+
+
+
+
+{% endblock %}

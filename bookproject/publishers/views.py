@@ -64,3 +64,53 @@ class PublisherDeleteView(BaseDeleteView):
         queryset = super().get_queryset()
         queryset = queryset.filter(profile_id=self.request.user.profile.id)
         return queryset
+    
+    
+    
+class PublishingContractListView(BaseListView):
+
+    model = PublishingContract
+    queryset = PublishingContract.objects.select_related('author__profile')
+    paginate_by = settings.PAGINATED_BY
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(author__profile_id=self.request.user.profile.id)
+        return queryset
+    
+    
+class PublishingContractDetailView(BaseDetailView):
+    model = PublishingContract
+
+    def get_queryset(self):
+        queryset = super().get_queryset().select_related('author__profile')
+        queryset = queryset.filter(author__profile_id=self.request.user.profile.id)
+        return queryset
+    
+class PublishingContractCreateView(BaseCreateView):
+    model = PublishingContract
+    form_class = PublishingContractForm
+
+
+    # def form_valid(self,form):
+    #     form.instance.profile = self.request.user.profile
+    #     form.save()
+    #     return super().form_valid(form)
+
+
+
+class PublishingContractUpdateView(BaseUpdateView):
+    model = PublishingContract
+    form_class = PublishingContractForm
+
+
+
+
+class PublishingContractDeleteView(BaseDeleteView):
+    model = PublishingContract
+    ajax_partial = 'partials/ajax_delete_modal.html'
+
+    def get_queryset(self):
+        queryset = super().get_queryset().select_related('author__profile')
+        queryset = queryset.filter(author__profile_id=self.request.user.profile.id)
+        return queryset

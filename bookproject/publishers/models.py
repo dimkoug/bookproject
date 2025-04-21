@@ -8,7 +8,6 @@ from core.models import Timestamped
 class Publisher(Timestamped):
     name = models.CharField(max_length=255)
     website = models.URLField(blank=True, null=True)
-    # Optional: authors published by this publisher
     authors = models.ManyToManyField('authors.Author', through='PublishingContract', blank=True)
     image = models.ImageField(upload_to='publishers/', null=True, blank=True)
     profile = models.ForeignKey('profiles.Profile', on_delete=models.CASCADE)
@@ -31,6 +30,15 @@ class PublishingContract(models.Model):
     author = models.ForeignKey('authors.Author', on_delete=models.CASCADE)
     publisher = models.ForeignKey(Publisher, on_delete=models.CASCADE)
     contract_date = models.DateField(null=True, blank=True)
+    expiry_date = models.DateField(null=True, blank=True)  # ⬅️ new field!
 
     class Meta:
         unique_together = ('author', 'publisher')
+
+    def is_active(self):
+        from django.utils import timezone
+        today = timezone.now().date()
+        return not self.expiry_date or self.expiry_date >= today
+
+    def __str__(self):
+        return f"{self.author} with {self.publisher}"

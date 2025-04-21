@@ -57,3 +57,12 @@ class PublisherForm(BootstrapForm, forms.ModelForm):
         self.request = kwargs.pop("request")
         super().__init__(*args, **kwargs)
 
+
+class PublishingContractForm(BootstrapForm, forms.ModelForm):
+    class Meta:
+        model = PublishingContract
+        fields = ('publisher', 'author','contract_date', 'expiry_date')
+
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop("request")
+        super().__init__(*args, **kwargs)
