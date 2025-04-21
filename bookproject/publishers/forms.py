@@ -3,6 +3,7 @@ from django.forms import inlineformset_factory
 from django.forms.models import BaseInlineFormSet
 
 from core.forms import BootstrapForm
+from authors.models import Author
 
 from .models import *
 
@@ -66,3 +67,17 @@ class PublishingContractForm(BootstrapForm, forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop("request")
         super().__init__(*args, **kwargs)
+        author_queryset = Author.objects.select_related('profile').filter(profile_id=self.request.user.profile.id)
+      
+
+            
+            
+        if self.instance.pk:
+            author_queryset = Author.objects.select_related('profile').filter(profile_id=self.request.user.profile.id,id=self.instance.author_id)
+            
+
+        
+        
+        
+        self.fields['author'].queryset = author_queryset
+        self.fields['author'].widget.queryset = author_queryset
