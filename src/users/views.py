@@ -20,7 +20,7 @@ from django.template.loader import render_to_string
 from django.views.generic import FormView
 from django.conf import settings
 from profiles.models import Profile
-
+from .tasks import send_activation_email 
 from users.tokens import account_activation_token
 from users.forms import (
     UserCreationForm, UserAuthenticationForm,
@@ -129,14 +129,15 @@ class SignupView(FormView):
                 user.save()
             
             if not 'company' in self.request.session:  
-                subject = 'Activate Your MySite Account'
-                message = render_to_string('registration/account_activation_email.html', {
-                        'user': user,
-                        'domain': current_site.domain,
-                        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                        'token': account_activation_token.make_token(user),
-                })
-                user.email_user(subject, message)
+                # subject = 'Activate Your MySite Account'
+                # message = render_to_string('registration/account_activation_email.html', {
+                #         'user': user,
+                #         'domain': current_site.domain,
+                #         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                #         'token': account_activation_token.make_token(user),
+                # })
+                # user.email_user(subject, message)
+                send_activation_email.delay(user.pk, current_site.domain)
                 return redirect('account_activation_sent')
             else:
                 company = Company.objects.get(name=self.request.session.get('company'))
