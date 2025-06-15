@@ -1,6 +1,5 @@
 .venv
 env
-migrations
 virtualenv
 settings_local.py
 
@@ -38,3 +37,7 @@ virtualenv
 *.swp
 *.bat
 celerybeat-*
+
+**/migrations/*.py
+**/migrations/*.pyc
+!**/migrations/__init__.py
